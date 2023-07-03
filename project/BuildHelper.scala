@@ -65,28 +65,28 @@ object BuildHelper {
       case Some((0, _)) =>
         Seq(
           "-language:implicitConversions",
-          "-Xignore-scala2-macros"
+          "-Xignore-scala2-macros",
+        "-Werror",
         )
       case Some((2, 13)) =>
         Seq(
-          "-Ywarn-unused:params,-implicits"
+          "-Ywarn-unused:params,-implicits",
+        "-Werror",
         ) ++ std2xOptions ++ optimizerOptions(optimize)
       case Some((2, 12)) =>
         Seq(
           "-opt-warnings",
           "-Ywarn-extra-implicit",
-          "-Ywarn-unused:_,imports",
-          "-Ywarn-unused:imports",
           "-Ypartial-unification",
           "-Yno-adapted-args",
           "-Ywarn-inaccessible",
           "-Ywarn-infer-any",
           "-Ywarn-nullary-override",
           "-Ywarn-nullary-unit",
-          "-Ywarn-unused:params,-implicits",
           "-Xfuture",
           "-Xsource:2.13",
           "-Xmax-classfile-name",
+          "-Werror",
           "242"
         ) ++ std2xOptions ++ optimizerOptions(optimize)
       case Some((2, 11)) =>
@@ -98,7 +98,6 @@ object BuildHelper {
           "-Ywarn-nullary-override",
           "-Ywarn-nullary-unit",
           "-Xexperimental",
-          "-Ywarn-unused-import",
           "-Xfuture",
           "-Xsource:2.13",
           "-Xmax-classfile-name",
@@ -186,7 +185,7 @@ object BuildHelper {
     name := s"$prjName",
     crossScalaVersions := Seq(Scala212, Scala213),
     ThisBuild / scalaVersion := Scala213,
-    scalacOptions ++= stdOptions ++ extraOptions(scalaVersion.value, optimize = !isSnapshot.value),
+    scalacOptions ++= stdOptions ++ extraOptions(scalaVersion.value, optimize = !isSnapshot.value) ,
     libraryDependencies ++= {
       if (scalaVersion.value == Scala3)
         Seq(

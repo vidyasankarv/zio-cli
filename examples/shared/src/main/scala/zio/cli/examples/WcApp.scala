@@ -30,7 +30,7 @@ object WcApp extends ZIOCliDefault {
 
   val wc: Command[(WcOptions, ::[Path])] = Command("wc", options, args)
 
-  val execute: (WcOptions, ::[Path]) => UIO[Unit] = {
+    val execute: (WcOptions, ::[Path]) => UIO[Unit] = {
     def printResult(res: List[WcResult]): UIO[Unit] = {
       def wcTotal(results: List[WcResult]) = {
         def optSum(acc: WcResult, elem: WcResult, extract: WcResult => Option[Long]): Option[Long] =
@@ -56,6 +56,7 @@ object WcApp extends ZIOCliDefault {
         .when(res.length > 1)(printLine(format(wcTotal(res))).!)
         .ignore
     }
+
 
     (opts, paths) => {
       zio.Console.printLine(s"executing wc with args: $opts $paths").! *>

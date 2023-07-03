@@ -113,6 +113,7 @@ object CliApp {
           case Command.Subcommands(parent, _) => prefix(parent)
         }
 
+      OptionsOverride.checkForDotFiles("grep")
       self.command
         .parse(prefix(self.command) ++ args, self.config)
         .foldZIO(
